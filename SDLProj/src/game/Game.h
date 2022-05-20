@@ -16,7 +16,7 @@ public:
 	void Render();
 	void Clean();
 	void HandleEvents();
-	bool IsRunning();
+	inline bool IsRunning();
 
 };
 
