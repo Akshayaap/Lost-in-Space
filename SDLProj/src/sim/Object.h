@@ -2,11 +2,16 @@
 #include <SDL.h>
 #include "..\math\Vec2.h"
 
+class Vec2;
 class Object
 {
 public:
 	Object();
-	Object(Vec2& pos);
+	Object(SDL_Renderer* renderer);
+	Object(SDL_Renderer* renderer, const Vec2& pos);
+	Object(SDL_Renderer* renderer, const Vec2& pos, const Vec2& v);
+	Object(SDL_Renderer* renderer, const Vec2& pos, const Vec2& v, double mass);
+	Object(SDL_Renderer* renderer, const Vec2& pos, const Vec2& v, double mass,double radius);
 	~Object();
 	virtual void Update();
 	virtual void Render();
@@ -25,7 +30,16 @@ public:
 	inline void SetOrientation(const double orientation) {
 		this->orientation = orientation;
 	}
-
+	inline void SetMass(double mass) {
+		this->mass = mass;
+	}
+	inline void SetRadius(double radius) {
+		this->radius = radius;
+	}
+	inline void SetRenderer(SDL_Renderer* renderer) {
+		this->renderer = renderer;
+	}
+	
 	inline Vec2 GetPos()const {
 		return this->pos;
 	}
@@ -38,14 +52,37 @@ public:
 	inline double GetOrientation()const {
 		return this->orientation;
 	}
+	inline double GetMass() {
+		return this->mass;
+	}
+	inline double GetRadius() {
+		return this->radius;
+	}
+	inline SDL_Renderer* GetRenderer() {
+		return this->renderer;
+	}
 
-	virtual void Rotate(double t);
-	virtual void Translate(const Vec2& v);
-	virtual void Scal(double s);
+	virtual void Rotate(double t,const Vec2& pivot);
+	virtual void Translate(const Vec2& dLoc);
+	virtual void Scal(double s,const Vec2& center);
+	virtual void Interact(const Object& obj);
 protected:
 	Vec2 pos;
 	double orientation;
 	double omega;
 	Vec2 v;
 	Vec2 acc;
+	double mass;
+	double radius;
+	Vec2 force;
+
+protected:
+	double fScal = 1;
+	Vec2 fScalCenter = Vec2(0, 0);
+	Vec2 fTrans = Vec2(0, 0);
+
+
+
+protected:
+	SDL_Renderer* renderer;
 };

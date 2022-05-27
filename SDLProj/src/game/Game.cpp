@@ -4,9 +4,12 @@
 
 Game::Game(const char* title, int top, int left, int width, int height) {
 	Init(title, left, top, width, height);
-	this->ship = Ship(this->renderer);
-	//maze = Maze(this->renderer);
 	font = TTF_OpenFont("OpenSans-Regular.ttf", 50);
+
+	this->ship = Ship(this->renderer);
+	earth = Planet(this->renderer,Vec2(500,500),20000,200);
+
+	//maze = Maze(this->renderer);
 }
 
 Game::~Game() {
@@ -35,9 +38,9 @@ void Game::Go() {
         unprocessedSeconds = unprocessedSeconds + passedTime / 1000000.0;
 
         int count = 0;
+		HandleEvents();
         while(unprocessedSeconds > secondsForEachTick)
 		{
-			HandleEvents();
             Update();
             count++;
             unprocessedSeconds -= secondsForEachTick; 
@@ -46,12 +49,12 @@ void Game::Go() {
             tickCount++;
 
             if(tickCount % 60 == 0){
-                LOG(frames <<" fps");
+                //LOG(frames <<" fps");
                 previousTime += 1;
                 frames = 0;
             }
         }
-        LOG("Iterações do loop: "<<count);
+        //LOG("Iterações do loop: "<<count);
 
         if(ticked)
         {
@@ -96,10 +99,14 @@ void Game::Init(const char* title, int top, int left, int width, int height) {
 }
 
 void Game::Update() {
-	LOG("Update");
-	ship.Update();
+	//LOG("Update");
+	earth.Interact(ship);
+	ship.Interact(earth);
 
-	/**
+	ship.Update();
+	earth.Update();
+	
+	/*
 	if (maze.IsWinning(ship)) {
 		state.SetGameState(State::GAME_WON);
 		state.SetMessageState(State::MESSAGE_HIT_GATE);
@@ -111,12 +118,14 @@ void Game::Update() {
 }
 
 void Game::Render() {
-	LOG("Render");
+	//LOG("Render");
+
 
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderClear(renderer);
 
 	//this->maze.Render();
+	earth.Render();
 	this->ship.Render();
 
 	if (state.GetMessageState() != State::NORMAL) {
@@ -158,6 +167,7 @@ void Game::Render() {
 		}
 	}
 	SDL_RenderPresent(renderer);
+	PostProcessing();
 }
 
 void Game::Clean() {
@@ -169,48 +179,80 @@ void Game::Clean() {
 
 void Game::HandleEvents() {
 	SDL_Event event;
-	SDL_PollEvent(&event);
-	LOG("Event:" << event.type);
+	int x = 0, y = 0;
+	while (SDL_PollEvent(&event)) {
+		//LOG("Event:" << event.type);
 
-	switch (event.type) {
-	case SDL_QUIT:
-		isRunning = false;
-		LOG("Event::SDL_QUIT");
-		break;
-
-	case SDL_KEYDOWN:
-		switch (event.key.keysym.sym)
-		{
-		case SDLK_UP:
-			this->ship.Accelerate(0.005);
+		switch (event.type) {
+		case SDL_QUIT:
+			isRunning = false;
+			//LOG("Event::SDL_QUIT");
 			break;
 
-		case SDLK_DOWN:
-			this->ship.Accelerate(-0.005);
+		case SDL_MOUSEBUTTONDOWN:
+			if (event.button.button == 1) {
+				state.SetMouseState(State::MOUSE_LEFT_DOWN);
+			}
 			break;
 
-		case SDLK_LEFT:
-			this->ship.RollLeft();
+		case SDL_MOUSEBUTTONUP:
+			if (event.button.button == 1) {
+				state.SetMouseState(State::MOUSE_LEFT_UP);
+			}
 			break;
 
-		case SDLK_RIGHT:
-			this->ship.RollRight();
+		case SDL_KEYDOWN:
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_UP:
+				this->ship.Accelerate(0.0005);
+				break;
+
+			case SDLK_DOWN:
+				this->ship.Accelerate(-0.0005);
+				break;
+
+			case SDLK_LEFT:
+				this->ship.RollLeft();
+				break;
+
+			case SDLK_RIGHT:
+				this->ship.RollRight();
+				break;
+
+			default:
+				break;
+			}
+			break;
+		
+		case SDL_MOUSEWHEEL:
+			SDL_GetMouseState(&x,&y);
+			LOG("X:" << x << "\tY:" << y);
+			ship.Scal(1+event.wheel.preciseY / 10, Vec2(x, y));
+			break;
+
+		case SDL_MOUSEMOTION:
+			switch (state.GetMouseState()) {
+			case State::MOUSE_LEFT_DOWN:
+				ship.Translate(Vec2(event.motion.xrel, event.motion.yrel));
+				break;
+			default:
+				break;
+			}
 			break;
 
 		default:
 			break;
 		}
-
-	default:
-		break;
 	}
+	
 }
 
 void Game::Reset() {
 	ship.Reset();
 	ship.SetPos(Vec2(100, 100));
 	state.SetGameState(State::NORMAL);
-	state.SetInputState(State::NORMAL);
+	state.SetMouseState(State::NORMAL);
 	state.SetMessageState(State::NORMAL);
 }
 

@@ -4,6 +4,7 @@
 #include "..\sim\Ship.h"
 #include "..\sim\Maze.h"
 #include "..\dsa\State.h"
+#include "..\sim\Planet.h"
 
 #ifndef NDEBUG
 #include <iostream>
@@ -18,11 +19,15 @@ private:
 	bool isRunning;
 	SDL_Window *window;
 	SDL_Renderer* renderer;
-	Ship ship;
+	
 	//Maze maze;
 	SDL_Texture* message;
 	State state;
 	TTF_Font * font;
+
+private:
+	Ship ship;
+	Planet earth;
 
 public:
 	Game(const char* title, int top, int left, int width, int height);

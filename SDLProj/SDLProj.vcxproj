@@ -122,6 +122,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Program Files\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <Optimization>Disabled</Optimization>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,6 +148,9 @@
       <AdditionalIncludeDirectories>C:\Program Files\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -152,6 +162,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\gfx\SDL_Extension.cpp" />
+    <ClCompile Include="src\sim\Planet.cpp" />
     <ClCompile Include="src\sim\Maze.cpp" />
     <ClCompile Include="src\sim\Ship.cpp" />
     <ClCompile Include="src\sim\Object.cpp" />
@@ -162,6 +174,8 @@
     <ClCompile Include="src\dsa\State.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gfx\SDL_Extension.h" />
+    <ClInclude Include="src\sim\Planet.h" />
     <ClInclude Include="src\sim\Maze.h" />
     <ClInclude Include="src\sim\Ship.h" />
     <ClInclude Include="src\sim\Object.h" />

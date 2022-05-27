@@ -114,6 +114,16 @@ Vec2& Vec2::Norm() {
     return *this;
 }
 
+Vec2 Vec2::operator / (double d)const {
+    return Vec2(this->r / d, this->t, true);
+}
+
+Vec2& Vec2::operator /= (double d) {
+    this->r /= d;
+    this->AdjustRT();
+    return *this;
+}
+
 Vec2 Vec2::GetNorm() const {
     return Vec2(this->x / this->r, this->y / this->r);
 }
@@ -136,4 +146,8 @@ double Vec2::Dot(const Vec2& v){
 
 double Vec2::Cross(const Vec2& v) {
     return this->x * v.y - this->y * v.x;
+}
+
+double Vec2::Distance(const Vec2& v) {
+    return (*this - v).GetR();
 }

@@ -4,7 +4,7 @@ class Vec2
 {
 private:
 	double x;
-	double y; 
+	double y;
 	double r;
 	double t;
 
@@ -28,13 +28,15 @@ public:
 	Vec2& operator -= (const Vec2& v);
 	Vec2 operator * (double s)const;
 	Vec2& operator *= (double s);
+	Vec2 operator / (double sd)const;
+	Vec2& operator /= (double d);
 	Vec2& Norm();
 	Vec2 GetNorm()const;
 	Vec2& Ortho();
 	Vec2 GetOrtho()const;
 	double Dot(const Vec2& v);
 	double Cross(const Vec2& v);
-
+	double Distance(const Vec2& v);
 	inline double GetX()const {
 		return this->x;
 	}

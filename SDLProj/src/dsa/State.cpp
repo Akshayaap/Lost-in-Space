@@ -1,7 +1,8 @@
 #include "State.h"
 
 State::State() {
-	inputState = State::NORMAL;
+	mouseState = State::NORMAL;
 	gameState = State::NORMAL;
 	messageState = State::NORMAL;
+	keyBordState = State::NORMAL;
 }

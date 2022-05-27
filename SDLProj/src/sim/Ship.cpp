@@ -3,8 +3,6 @@
 #include "..\math\util.h"
 
 
-Ship::Ship() {}
-
  Ship::Ship(SDL_Renderer * renderer) {
 	 sRect.x = 0;
 	 sRect.y = 0;
@@ -30,12 +28,16 @@ Ship::Ship() {}
 void Ship::Update() {
 	Object::Update();
 
-	this->dRect.x = this->pos.GetX() - 29;
-	this->dRect.y = 600 - this->pos.GetY();
+	this->dRect.x = this->fScal * (this->pos.GetX() - fScalCenter.GetX()) + fScalCenter.GetX() + fTrans.GetX();
+	this->dRect.y =  (fScal * (this->pos.GetY() - fScalCenter.GetY()) + fScalCenter.GetY() + fTrans.GetY());
+
+	dRect.w = 57 * fScal;
+	dRect.h = 43 * fScal;
+
 }
 
 void Ship::Render() {
-	SDL_RenderCopyEx(this->renderer, this->ship, &sRect, &dRect, - this->orientation * 180 / PI, nullptr, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(this->renderer, this->ship, &sRect, &dRect,  this->orientation * 180 / PI, nullptr, SDL_FLIP_NONE);
 }
 
 void Ship::Accelerate() {
@@ -51,11 +53,11 @@ void Ship::Accelerate(const double acc) {
 }
 
 void Ship::RollRight() {
-	this->omega -= 0.0001;
+	this->omega += 0.00001;
 }
 
 void Ship::RollLeft() {
-	this->omega += 0.0001;
+	this->omega -= 0.00001;
 }
 
 void Ship::Reset() {
@@ -64,4 +66,23 @@ void Ship::Reset() {
 
 void Ship::PostProcessing() {
 	Object::PostProcessing();
+}
+
+void Ship::Translate(const Vec2& dLoc) {
+	this->fTrans += dLoc;
+	fScalCenter +=  dLoc * fScal;
+}
+
+void Ship::Scal(double s, const Vec2& center) {
+	fScal *= s;
+	this->fScalCenter = center;
+	fScalCenter /= fScal;
+}
+
+void Ship::Rotate(double t, const Vec2& pivot) {
+	
+}
+
+void Ship::Interact(const Object& obj) {
+	Object::Interact(obj);
 }
