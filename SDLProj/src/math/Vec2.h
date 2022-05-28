@@ -20,12 +20,14 @@ public:
 	Vec2(const Vec2& v);
 	Vec2& operator = (const Vec2& v);
 	
+	Vec2 operator - ()const;
 	Vec2 operator + (const Vec2& v)const;
 	Vec2 operator + (const double r)const;
 	Vec2& operator += (const Vec2& v);
 	Vec2& operator += (const double);
 	Vec2 operator - (const Vec2& v)const;
 	Vec2& operator -= (const Vec2& v);
+	Vec2& operator -=(double r);
 	Vec2 operator * (double s)const;
 	Vec2& operator *= (double s);
 	Vec2 operator / (double sd)const;
@@ -37,6 +39,10 @@ public:
 	double Dot(const Vec2& v);
 	double Cross(const Vec2& v);
 	double Distance(const Vec2& v);
+	Vec2& Rotate(double t);
+	Vec2 GetRotate(double t);
+	Vec2& Rotate(double t, const Vec2& v);
+	Vec2 GetRotate(double t, const Vec2& v);
 	inline double GetX()const {
 		return this->x;
 	}

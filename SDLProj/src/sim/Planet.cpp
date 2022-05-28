@@ -25,8 +25,8 @@ Planet::Planet(SDL_Renderer*renderer,const Vec2& pos, double mass,double radius)
 
 void Planet::Update() {
 	Object::Update();
-	this->dRect.x = this->pos.GetX() + fTrans.GetX();
-	this->dRect.y = this->pos.GetY() + fTrans.GetY();
+	this->dRect.x = this->pos.GetX() + fTrans.GetX() - this->radius;
+	this->dRect.y = this->pos.GetY() + fTrans.GetY() - this->radius;
 }
 
 void Planet::Render() {

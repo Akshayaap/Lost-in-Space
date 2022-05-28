@@ -6,6 +6,8 @@ class Ship:public Object
 public:
 	Ship() = default;
 	Ship(SDL_Renderer *renderer);
+	Ship(SDL_Renderer *renderer,const Vec2& pos);
+	Ship(SDL_Renderer *renderer,const Vec2& pos,const Vec2& v);
 	~Ship();
 
 	virtual void Update()override;

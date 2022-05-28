@@ -7,6 +7,7 @@ class Object
 {
 public:
 	Object();
+	Object(const Object& obj);
 	Object(SDL_Renderer* renderer);
 	Object(SDL_Renderer* renderer, const Vec2& pos);
 	Object(SDL_Renderer* renderer, const Vec2& pos, const Vec2& v);
@@ -16,6 +17,7 @@ public:
 	virtual void Update();
 	virtual void Render();
 	virtual void Reset();
+	virtual void Interact(const Object& obj);
 	virtual void PostProcessing();
 
 	inline void SetPos(const Vec2& pos) {
@@ -65,7 +67,6 @@ public:
 	virtual void Rotate(double t,const Vec2& pivot);
 	virtual void Translate(const Vec2& dLoc);
 	virtual void Scal(double s,const Vec2& center);
-	virtual void Interact(const Object& obj);
 protected:
 	Vec2 pos;
 	double orientation;
@@ -80,8 +81,6 @@ protected:
 	double fScal = 1;
 	Vec2 fScalCenter = Vec2(0, 0);
 	Vec2 fTrans = Vec2(0, 0);
-
-
 
 protected:
 	SDL_Renderer* renderer;

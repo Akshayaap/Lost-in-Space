@@ -4,17 +4,18 @@
 
 
  Ship::Ship(SDL_Renderer * renderer) {
-	 sRect.x = 0;
+	  this->pos = Vec2(100, 100);
+	 this->radius = 35.7;
+
+	  sRect.x = 0;
 	 sRect.y = 0;
 	 sRect.w = 57;
 	 sRect.h = 43;
 
-	 dRect.x = 200;
-	 dRect.y = 200;
+	 dRect.x = this->pos.GetX() - this->radius;
+	 dRect.y = -this->pos.GetY() - this->radius;
 	 dRect.w = 57;
 	 dRect.h = 43;
-
-	 this->pos = Vec2(100,100);
 
 	 this->renderer = renderer;
 
@@ -23,13 +24,65 @@
 	 SDL_FreeSurface(surface);
 }
 
+ Ship::Ship(SDL_Renderer* renderer, const Vec2& pos) {
+	 sRect.x = 0;
+	 sRect.y = 0;
+	 sRect.w = 57;
+	 sRect.h = 43;
+
+
+	 this->pos = pos;
+	 this->radius = 35.7;
+
+	 dRect.x = this->pos.GetX() - this->radius;
+	 dRect.y = this->pos.GetY() - this->radius;
+	 dRect.w = 57;
+	 dRect.h = 43;
+
+	 this->renderer = renderer;
+
+	 SDL_Surface* surface = IMG_Load("ship.png");
+	 ship = SDL_CreateTextureFromSurface(this->renderer, surface);
+	 SDL_FreeSurface(surface);
+ }
+ 
+ Ship::Ship(SDL_Renderer* renderer, const Vec2& pos, const Vec2& v) {
+	 sRect.x = 0;
+	 sRect.y = 0;
+	 sRect.w = 57;
+	 sRect.h = 43;
+
+	 this->pos = pos;
+	 this->v = v;
+	 this->radius = 35.7;
+
+	 dRect.x = this->pos.GetX() - this->radius;
+	 dRect.y = this->pos.GetY() - this->radius;
+	 dRect.w = 57;
+	 dRect.h = 43;
+
+
+	 this->renderer = renderer;
+
+	 SDL_Surface* surface = IMG_Load("ship.png");
+	 ship = SDL_CreateTextureFromSurface(this->renderer, surface);
+	 SDL_FreeSurface(surface);
+ }
+
  Ship::~Ship() {}
 
 void Ship::Update() {
 	Object::Update();
 
-	this->dRect.x = this->pos.GetX()  + fTrans.GetX();
-	this->dRect.y =  this->pos.GetY() + fTrans.GetY();
+
+#ifndef NDEBUG
+	//this->pos.Rotate(omega);
+#endif // !NDEBUG
+
+	
+
+	this->dRect.x = this->pos.GetX() + fTrans.GetX() - this->radius;
+	this->dRect.y = this->pos.GetY() + fTrans.GetY() - this->radius;
 
 	dRect.w = 57 * fScal;
 	dRect.h = 43 * fScal;
@@ -53,11 +106,11 @@ void Ship::Accelerate(const double acc) {
 }
 
 void Ship::RollRight() {
-	this->omega += 0.00001;
+	this->omega += 0.01;
 }
 
 void Ship::RollLeft() {
-	this->omega -= 0.00001;
+	this->omega -= 0.01;
 }
 
 void Ship::Reset() {

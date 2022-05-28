@@ -1,4 +1,5 @@
 #pragma once
+#include <unordered_map>
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include "..\sim\Ship.h"
@@ -28,6 +29,7 @@ private:
 private:
 	Ship ship;
 	Planet earth;
+	std::unordered_map<Object,Object> map;
 
 public:
 	Game(const char* title, int top, int left, int width, int height);

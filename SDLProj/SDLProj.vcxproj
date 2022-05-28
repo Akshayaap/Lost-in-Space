@@ -184,6 +184,9 @@
     <ClInclude Include="src\math\Vec2.h" />
     <ClInclude Include="src\dsa\State.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="src\ClassDiagram.cd" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

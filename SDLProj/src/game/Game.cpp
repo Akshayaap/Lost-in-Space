@@ -6,7 +6,7 @@ Game::Game(const char* title, int top, int left, int width, int height) {
 	Init(title, left, top, width, height);
 	font = TTF_OpenFont("OpenSans-Regular.ttf", 50);
 
-	this->ship = Ship(this->renderer);
+	this->ship = Ship(this->renderer, Vec2(200, 200), Vec2(2, -1));
 	earth = Planet(this->renderer,Vec2(500,500),20000,200);
 
 	//maze = Maze(this->renderer);
@@ -20,7 +20,7 @@ void Game::Go() {
 
 	 int frames = 0;
     double unprocessedSeconds = 0;
-    long previousTime = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+    double previousTime = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 
     double secondsForEachTick = 1/60.0; 
 
@@ -30,17 +30,17 @@ void Game::Go() {
 
     while (isRunning) 
     {
-        long currentTime = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-        long passedTime = currentTime - previousTime;
+        double currentTime = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+        double passedTime = currentTime - previousTime;
 
         previousTime = currentTime;
 
-        unprocessedSeconds = unprocessedSeconds + passedTime / 1000000.0;
+        unprocessedSeconds = unprocessedSeconds + passedTime / 1000000000.0;
 
         int count = 0;
-		HandleEvents();
         while(unprocessedSeconds > secondsForEachTick)
 		{
+			HandleEvents();
             Update();
             count++;
             unprocessedSeconds -= secondsForEachTick; 
@@ -99,8 +99,19 @@ void Game::Init(const char* title, int top, int left, int width, int height) {
 }
 
 void Game::Update() {
-	//LOG("Update");
 
+#ifndef NDEBUG
+	static int ticked = 0;
+	static int count = 0;
+	count++;
+	if (count >= 60) {
+		ticked++;
+		LOG("Update -------------------> : " << ticked);
+		count = 0;
+	}
+#endif // !NDEBUG
+
+	Interact();
 	ship.Update();
 	earth.Update();
 	
@@ -203,11 +214,11 @@ void Game::HandleEvents() {
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_UP:
-				this->ship.Accelerate(0.0005);
+				this->ship.Accelerate(0.5);
 				break;
 
 			case SDLK_DOWN:
-				this->ship.Accelerate(-0.0005);
+				this->ship.Accelerate(-0.5);
 				break;
 
 			case SDLK_LEFT:
