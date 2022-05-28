@@ -100,8 +100,6 @@ void Game::Init(const char* title, int top, int left, int width, int height) {
 
 void Game::Update() {
 	//LOG("Update");
-	earth.Interact(ship);
-	ship.Interact(earth);
 
 	ship.Update();
 	earth.Update();
@@ -235,6 +233,7 @@ void Game::HandleEvents() {
 			switch (state.GetMouseState()) {
 			case State::MOUSE_LEFT_DOWN:
 				ship.Translate(Vec2(event.motion.xrel, event.motion.yrel));
+				earth.Translate(Vec2(event.motion.xrel, event.motion.yrel));
 				break;
 			default:
 				break;
@@ -269,4 +268,9 @@ void Game::PostProcessing() {
 	default:
 		break;
 	}
+}
+
+void Game::Interact() {
+	earth.Interact(ship);
+	ship.Interact(earth);
 }

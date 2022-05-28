@@ -6,6 +6,7 @@ class Planet : public Object{
 
 private:
 	SDL_Texture* earth;
+	SDL_Rect dRect;
 public:
 	Planet() = default;
 	Planet(SDL_Renderer*rernderer,const Vec2& pos);
@@ -13,8 +14,11 @@ public:
 	Planet(SDL_Renderer*rernderer,const Vec2& pos, double mass, double radius);
 
 public:
-	void Update()override;
-	void Render()override;
+	virtual void Update()override;
+	virtual void Render()override;
+	virtual void Interact(const Object& obj);
 	void SetTexture(const char* file);
+
+	virtual void Translate(const Vec2& dLoc);
 	
 };

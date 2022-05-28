@@ -35,6 +35,7 @@ public:
 	void Go();
 	void Init(const char* title,int top,int left, int width,int height);
 	void Update();
+	void Interact();
 	void Render();
 	void Clean();
 	void HandleEvents();

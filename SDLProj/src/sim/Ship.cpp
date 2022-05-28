@@ -28,8 +28,8 @@
 void Ship::Update() {
 	Object::Update();
 
-	this->dRect.x = this->fScal * (this->pos.GetX() - fScalCenter.GetX()) + fScalCenter.GetX() + fTrans.GetX();
-	this->dRect.y =  (fScal * (this->pos.GetY() - fScalCenter.GetY()) + fScalCenter.GetY() + fTrans.GetY());
+	this->dRect.x = this->pos.GetX()  + fTrans.GetX();
+	this->dRect.y =  this->pos.GetY() + fTrans.GetY();
 
 	dRect.w = 57 * fScal;
 	dRect.h = 43 * fScal;
@@ -70,13 +70,9 @@ void Ship::PostProcessing() {
 
 void Ship::Translate(const Vec2& dLoc) {
 	this->fTrans += dLoc;
-	fScalCenter +=  dLoc * fScal;
 }
 
 void Ship::Scal(double s, const Vec2& center) {
-	fScal *= s;
-	this->fScalCenter = center;
-	fScalCenter /= fScal;
 }
 
 void Ship::Rotate(double t, const Vec2& pivot) {
