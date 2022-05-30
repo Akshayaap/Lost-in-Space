@@ -3,7 +3,7 @@
 #include "..\math\Vec2.h"
 #include "Object.h"
 
-#define PATH_LENGTH 200
+#define PATH_LENGTH 2000
 
 class ObjInterface:public Object{
 public:

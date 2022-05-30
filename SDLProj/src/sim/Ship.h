@@ -31,8 +31,9 @@ public:
 
 private:
 	SDL_Texture* ship = nullptr;
+	SDL_Texture* fire = nullptr;
 	SDL_Renderer* renderer = nullptr;
-	SDL_Rect sRect;
+	SDL_Rect fRect;
 	SDL_Rect dRect;
 };
 

@@ -24,12 +24,14 @@ void ObjInterface::Update() {
 		this->current = 0;
 	}	
 
-	Vec2 scaled(this->pos.GetX() + fTrans.GetX() - this->radius, this->pos.GetY() + fTrans.GetY() - this->radius);
-	
+	Vec2 scaled(this->pos);
+
 	scaled -= (this->fScalCenter);
 	scaled *= (this->fScal);
 	scaled += (this->fScalCenter);
 
+	scaled += this->fTrans;
+	
 	this->points[current] = scaled;
 }
 

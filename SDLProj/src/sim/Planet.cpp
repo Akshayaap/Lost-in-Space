@@ -34,10 +34,15 @@ void Planet::Update() {
 	Object::Update();
 	Vec2 sCenter();
 
-	Vec2 scaled(this->pos.GetX() + fTrans.GetX() - this->radius, this->pos.GetY() + fTrans.GetY() - this->radius);
-	scaled -= (this->fScalCenter);
-	scaled *= (this->fScal);
-	scaled += (this->fScalCenter);
+	Vec2 scaled(this->pos);
+
+	scaled -= this->fScalCenter;
+	scaled *= this->fScal;
+	scaled += this->fScalCenter;
+
+	scaled += this->fTrans;
+	scaled -= Vec2(this->radius * this->fScal, this->radius * this->fScal);
+
 
 	this->dRect.x = scaled.GetX();
 	this->dRect.y = scaled.GetY();

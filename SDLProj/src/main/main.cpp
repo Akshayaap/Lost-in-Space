@@ -19,7 +19,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine
 
 {
 
-	Game game("Start wars",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,1920,1080);
+	Game game("Start wars", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080);
 	game.Go();
 
 	return 0;

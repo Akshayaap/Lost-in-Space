@@ -229,11 +229,11 @@ void Game::HandleEvents() {
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_UP:
-				this->ship.Accelerate(0.5);
+				this->ship.Accelerate(0.01);
 				break;
 
 			case SDLK_DOWN:
-				this->ship.Accelerate(-0.5);
+				this->ship.Accelerate(-0.01);
 				break;
 
 			case SDLK_LEFT:

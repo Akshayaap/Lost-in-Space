@@ -105,4 +105,5 @@ protected:
 protected:
 	SDL_Renderer* renderer;
 	ObjInterface* slave = nullptr;
+	bool thrust = false;
 };
