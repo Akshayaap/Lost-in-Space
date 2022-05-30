@@ -5,13 +5,13 @@
 
 
  Ship::Ship(SDL_Renderer * renderer) {
-	  this->pos = Vec2(100, 100);
-	 this->radius = 35.7;
+	this->pos = Vec2(100, 100);
+	this->radius = 35.7;
 
-	  sRect.x = 0;
-	 sRect.y = 0;
-	 sRect.w = 57;
-	 sRect.h = 43;
+	sRect.x = 0;
+	sRect.y = 0;
+	sRect.w = 57;
+	sRect.h = 43;
 
 	 dRect.x = this->pos.GetX() - this->radius;
 	 dRect.y = -this->pos.GetY() - this->radius;
@@ -66,7 +66,12 @@
 	 SDL_FreeSurface(surface);
  }
 
- Ship::~Ship() {}
+ Ship::~Ship() {
+	 Object::~Object();
+	 if (this->ship) {
+		 delete this->ship;
+	 }
+ }
 
 void Ship::Update() {
 	Object::Update();
@@ -76,14 +81,16 @@ void Ship::Update() {
 	//this->pos.Rotate(omega);
 #endif // !NDEBUG
 
-	
+	Vec2 scaled(this->pos.GetX() + fTrans.GetX() - this->radius, this->pos.GetY() + fTrans.GetY() - this->radius);
+	scaled -= (this->fScalCenter);
+	scaled *= (this->fScal);
+	scaled += (this->fScalCenter);
 
-	this->dRect.x = this->pos.GetX() + fTrans.GetX() - this->radius;
-	this->dRect.y = this->pos.GetY() + fTrans.GetY() - this->radius;
+	this->dRect.x = scaled.GetX();
+	this->dRect.y = scaled.GetY();
 
-	dRect.w = 57 * fScal;
-	dRect.h = 43 * fScal;
-	
+	this->dRect.w = 57 * fScal;
+	this->dRect.h = 43 * fScal;
 }
 
 void Ship::Render() {
@@ -124,13 +131,11 @@ void Ship::PostProcessing() {
 }
 
 void Ship::Translate(const Vec2& dLoc) {
-	this->fTrans += dLoc;
-	if (this->slave) {
-		this->slave->Translate(dLoc);
-	}
+	Object::Translate(dLoc);
 }
 
 void Ship::Scal(double s, const Vec2& center) {
+	Object::Scal(s, center);
 }
 
 void Ship::Rotate(double t, const Vec2& pivot) {

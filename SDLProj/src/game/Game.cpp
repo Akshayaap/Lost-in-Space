@@ -214,12 +214,14 @@ void Game::HandleEvents() {
 		case SDL_MOUSEBUTTONDOWN:
 			if (event.button.button == 1) {
 				state.SetMouseState(State::MOUSE_LEFT_DOWN);
+				InitPath();
 			}
 			break;
 
 		case SDL_MOUSEBUTTONUP:
 			if (event.button.button == 1) {
 				state.SetMouseState(State::MOUSE_LEFT_UP);
+				InitPath();
 			}
 			break;
 
@@ -249,16 +251,20 @@ void Game::HandleEvents() {
 			break;
 		
 		case SDL_MOUSEWHEEL:
+
 			SDL_GetMouseState(&x,&y);
 			LOG("X:" << x << "\tY:" << y);
-			ship.Scal(1+event.wheel.preciseY / 10, Vec2(x, y));
-			break;
 
+			ship.Scal(event.wheel.y , Vec2(x, y));
+			earth.Scal(event.wheel.y , Vec2(x, y));\
+			InitPath();
+			break;
 		case SDL_MOUSEMOTION:
 			switch (state.GetMouseState()) {
 			case State::MOUSE_LEFT_DOWN:
 				ship.Translate(Vec2(event.motion.xrel, event.motion.yrel));
 				earth.Translate(Vec2(event.motion.xrel, event.motion.yrel));
+				InitPath();
 				break;
 			default:
 				break;

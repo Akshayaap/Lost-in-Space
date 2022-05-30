@@ -99,8 +99,8 @@ protected:
 
 protected:
 	double fScal = 1;
-	Vec2 fScalCenter = Vec2(0, 0);
-	Vec2 fTrans = Vec2(0, 0);
+	Vec2 fTrans;
+	Vec2 fScalCenter;
 
 protected:
 	SDL_Renderer* renderer;

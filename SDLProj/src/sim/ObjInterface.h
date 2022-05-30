@@ -11,6 +11,7 @@ public:
 	ObjInterface(const Object* obj, int fPoints = 200);
 	ObjInterface(const ObjInterface& objInt) = delete;
 	ObjInterface& operator = (const ObjInterface& objInt) = delete;
+	~ObjInterface();
 
 public:
 	//virtual void Trajectory(std::vector<Vec2>,int fPoint = 200);
@@ -24,6 +25,7 @@ public:
 		return this->malik;
 	}
 	void SetRenderer(SDL_Renderer* renderer);
+	void Translate(const Vec2& dLoc);
 
 public:
 	

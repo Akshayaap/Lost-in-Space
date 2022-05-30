@@ -23,11 +23,27 @@ Planet::Planet(SDL_Renderer*renderer,const Vec2& pos, double mass,double radius)
 	this->dRect.h = radius * 2;
 }
 
+Planet::~Planet() {
+	Object::~Object();
+	if (this->texture) {
+		delete this->texture;
+	}
+}
+
 void Planet::Update() {
 	Object::Update();
-	this->dRect.x = this->pos.GetX() + fTrans.GetX() - this->radius;
-	this->dRect.y = this->pos.GetY() + fTrans.GetY() - this->radius;
+	Vec2 sCenter();
+
+	Vec2 scaled(this->pos.GetX() + fTrans.GetX() - this->radius, this->pos.GetY() + fTrans.GetY() - this->radius);
+	scaled -= (this->fScalCenter);
+	scaled *= (this->fScal);
+	scaled += (this->fScalCenter);
+
+	this->dRect.x = scaled.GetX();
+	this->dRect.y = scaled.GetY();
 	
+	this->dRect.w = 2 * this->radius * fScal;
+	this->dRect.h = 2 * this->radius * fScal;
 }
 
 void Planet::Render() {
@@ -44,11 +60,8 @@ void Planet::SetTexture(const char* file) {
 
 }
 
-void Planet::Translate(const Vec2& dLoc) {
-	this->fTrans += dLoc;
-	if (this->slave) {
-		this->slave->Translate(dLoc);
-	}
+void Planet::Translate(const Vec2& dLoc){
+Object::Translate(dLoc);
 }
 
 void Planet::Interact(const Object& obj) {
@@ -64,5 +77,8 @@ void Planet::SetRenderer(SDL_Renderer* renderer) {
 	if (this->slave) {
 		this->slave->SetRenderer(renderer);
 	}
+}
 
+void Planet::Scal(double s, const Vec2& v) {
+	Object::Scal(s, v);
 }

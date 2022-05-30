@@ -25,10 +25,10 @@ Object::Object(const Object& obj) {
 	this->force = obj.force;
 	this->fScal = obj.fScal;
 	this->fTrans = obj.fTrans;
-	this->fScalCenter = obj.fScalCenter;
 	this->mass = obj.mass;
 	this->omega = obj.omega;
 	this->orientation = obj.orientation;
+	this->fScalCenter = fScalCenter;
 
 	this->slave = new ObjInterface(this);
 }
@@ -63,7 +63,6 @@ Object::Object(SDL_Renderer*renderer,const  Vec2& pos, const  Vec2& v, double ma
 {
 	this->renderer=renderer;
 	this->slave = new ObjInterface(this);
-
 }
 
 Object::Object(SDL_Renderer*renderer,const  Vec2& pos,const   Vec2& v, double mass, double radius)
@@ -86,11 +85,25 @@ void Object::Render() {}
 
 void Object::Rotate(double t,const Vec2& pivot) {}
 
-void Object::Translate(const Vec2& v) {
-	this->fTrans += v;
+void Object::Translate(const Vec2& dLoc) {
+	this->fTrans += dLoc;
+	if (this->slave) {
+		this->slave->Translate(dLoc);
+	}
 }
 
-void Object::Scal(double s,const Vec2& ) {}
+void Object::Scal(double s,const Vec2& v ) {
+	if (s > 0) {
+		fScal *= 1.05;
+	}
+	else {
+		fScal /= 1.05;
+	}
+	this->fScalCenter = v;
+	if (this->slave) {
+		this->slave->Scal(s, v);
+	}
+}
 
 void Object::PostProcessing() {}
 
