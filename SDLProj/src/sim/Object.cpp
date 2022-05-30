@@ -1,4 +1,5 @@
 #include "Object.h"
+#include "ObjInterface.h"
 #include "..\math\util.h"
 
 
@@ -13,7 +14,9 @@ Object::Object(SDL_Renderer*renderer,const Vec2& pos)
 Object::Object() 
 	:
 	pos(0, 0), v(0, 0) ,acc(0, 0) ,omega(0) ,mass(100), radius(10), orientation(0), force(0, 0)
-{}
+{
+//	this->slave = new ObjInterface(this);
+}
 
 Object::Object(const Object& obj) {
 	this->acc = obj.acc;
@@ -23,6 +26,11 @@ Object::Object(const Object& obj) {
 	this->fScal = obj.fScal;
 	this->fTrans = obj.fTrans;
 	this->fScalCenter = obj.fScalCenter;
+	this->mass = obj.mass;
+	this->omega = obj.omega;
+	this->orientation = obj.orientation;
+
+	this->slave = new ObjInterface(this);
 }
 
 Object::Object(SDL_Renderer* renderer)
@@ -30,15 +38,23 @@ Object::Object(SDL_Renderer* renderer)
 	pos(0, 0), v(0, 0), acc(0, 0), omega(0), mass(100), radius(10), orientation(0), force(0, 0)
 {
 	this->renderer = renderer;
+	this->slave = new ObjInterface(this);
+
 }
 
-Object::~Object(){}
+Object::~Object(){
+	if (this->slave) {
+		delete this->slave;
+	}
+}
 
 Object::Object( SDL_Renderer*renderer,const Vec2& pos,const   Vec2& v) 
 	:
 	pos(pos), v(v), acc(0, 0), omega(0), mass(100), radius(10), orientation(0), force(0, 0)
 {
 	this->renderer = renderer;
+	this->slave = new ObjInterface(this);
+
 }
 
 Object::Object(SDL_Renderer*renderer,const  Vec2& pos, const  Vec2& v, double mass)
@@ -46,6 +62,8 @@ Object::Object(SDL_Renderer*renderer,const  Vec2& pos, const  Vec2& v, double ma
 	pos(pos), v(v), acc(0, 0), omega(0), mass(mass), radius(10), orientation(0), force(0, 0)
 {
 	this->renderer=renderer;
+	this->slave = new ObjInterface(this);
+
 }
 
 Object::Object(SDL_Renderer*renderer,const  Vec2& pos,const   Vec2& v, double mass, double radius)
@@ -53,6 +71,7 @@ Object::Object(SDL_Renderer*renderer,const  Vec2& pos,const   Vec2& v, double ma
 	pos(pos), v(v), acc(0, 0), omega(0), mass(mass), radius(radius), orientation(0), force(0, 0)
 {
 	this->renderer=renderer;
+	this->slave = new ObjInterface(this);
 }
 
 void Object :: Update() {
@@ -67,7 +86,9 @@ void Object::Render() {}
 
 void Object::Rotate(double t,const Vec2& pivot) {}
 
-void Object::Translate(const Vec2& v) {}
+void Object::Translate(const Vec2& v) {
+	this->fTrans += v;
+}
 
 void Object::Scal(double s,const Vec2& ) {}
 
@@ -92,4 +113,7 @@ void Object::Interact(const Object& obj) {
 	Vec2 dir = (  this->pos - obj.pos).Norm();
 	dir *= force;
 	this->force -= dir;
+}
+void Object::SetRenderer(SDL_Renderer* renderer) {
+	
 }

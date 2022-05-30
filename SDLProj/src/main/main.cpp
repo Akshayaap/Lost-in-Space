@@ -17,9 +17,9 @@ int main(int argc, char** argv)
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
 #endif // !NDEBUG
 
-
 {
-	Game game("Start wars",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,1366,768);
+
+	Game game("Start wars",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,1920,1080);
 	game.Go();
 
 	return 0;

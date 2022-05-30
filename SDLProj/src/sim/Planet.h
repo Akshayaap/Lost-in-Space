@@ -5,7 +5,7 @@ class Planet : public Object{
 	
 
 private:
-	SDL_Texture* earth;
+	SDL_Texture* texture;
 	SDL_Rect dRect;
 public:
 	Planet() = default;
@@ -18,7 +18,7 @@ public:
 	virtual void Render()override;
 	virtual void Interact(const Object& obj);
 	void SetTexture(const char* file);
-
+	void SetRenderer(SDL_Renderer* renderer);
 	virtual void Translate(const Vec2& dLoc);
 	
 };

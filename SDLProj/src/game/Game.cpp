@@ -1,14 +1,23 @@
 #include <string>
 #include <chrono>
 #include "Game.h"
+#include "..\sim\ObjInterface.h"
 
-Game::Game(const char* title, int top, int left, int width, int height) {
+Game::Game(const char* title, int top, int left, int width, int height) 
+	:ship(this->renderer, Vec2(200, 200), Vec2(2, 1)),
+	earth(this->renderer, Vec2(500, 500), 20000, 200)
+{
 	Init(title, left, top, width, height);
 	font = TTF_OpenFont("OpenSans-Regular.ttf", 50);
 
-	this->ship = Ship(this->renderer, Vec2(200, 200), Vec2(2, -1));
-	earth = Planet(this->renderer,Vec2(500,500),20000,200);
+	ship.SetRenderer(this->renderer);
+	earth.SetRenderer(this->renderer);
+	
+	this->slaves.push_back(ship.GetSlave());
+	
+	this->slaves.push_back(earth.GetSlave());
 
+	InitPath();
 	//maze = Maze(this->renderer);
 }
 
@@ -49,13 +58,10 @@ void Game::Go() {
             tickCount++;
 
             if(tickCount % 60 == 0){
-                //LOG(frames <<" fps");
                 previousTime += 1;
                 frames = 0;
             }
         }
-        //LOG("Iterações do loop: "<<count);
-
         if(ticked)
         {
             Render();
@@ -72,7 +78,7 @@ void Game::Init(const char* title, int top, int left, int width, int height) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0 && TTF_Init()==0) {
 		LOG("Subsystem Initialized");
 
-		window = SDL_CreateWindow(title, left, top, width, height, 0);
+		window = SDL_CreateWindow(title, left, top, width, height, SDL_WINDOW_FULLSCREEN);
 		if (window) {
 			LOG("Window Created");
 		}
@@ -114,6 +120,9 @@ void Game::Update() {
 	Interact();
 	ship.Update();
 	earth.Update();
+	//for (auto& slave : this->slaves) {
+		//slave->Update();
+	//}
 	
 	/*
 	if (maze.IsWinning(ship)) {
@@ -136,6 +145,10 @@ void Game::Render() {
 	//this->maze.Render();
 	earth.Render();
 	this->ship.Render();
+	for (auto& slave: this->slaves) {
+		slave->Render();
+	}
+	LOG("SDL Error:" << SDL_GetError());
 
 	if (state.GetMessageState() != State::NORMAL) {
 		SDL_Surface* surface = nullptr;
@@ -232,6 +245,7 @@ void Game::HandleEvents() {
 			default:
 				break;
 			}
+			InitPath();
 			break;
 		
 		case SDL_MOUSEWHEEL:
@@ -284,4 +298,29 @@ void Game::PostProcessing() {
 void Game::Interact() {
 	earth.Interact(ship);
 	ship.Interact(earth);
+	for (int j = 0; j < this->slaves.size(); j++) {
+		for (int k = 0; k < this->slaves.size(); k++) {
+			if (j != k) {
+				this->slaves[j]->Interact(*this->slaves[k]);
+			}
+		}
+		this->slaves[j]->Update();
+	}
+}
+
+void Game::InitPath() {
+	for (int i = 0; i < this->slaves.size(); i++) {
+		this->slaves[i]->Clear();
+		this->slaves[i]->Reset();
+	}
+	for (int i = 0; i < PATH_LENGTH; i++) {
+		for (int j = 0; j < this->slaves.size(); j++) {
+			for (int k = 0; k < this->slaves.size(); k++) {
+				if (j != k) {
+					this->slaves[j]->Interact(*this->slaves[k]);
+				}
+			}
+			this->slaves[j]->Update();
+		}
+	}
 }

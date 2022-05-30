@@ -1,6 +1,7 @@
 #include <SDL_Image.h>
 #include "Ship.h"
 #include "..\math\util.h"
+#include "ObjInterface.h"
 
 
  Ship::Ship(SDL_Renderer * renderer) {
@@ -46,23 +47,19 @@
 	 SDL_FreeSurface(surface);
  }
  
- Ship::Ship(SDL_Renderer* renderer, const Vec2& pos, const Vec2& v) {
+ Ship::Ship(SDL_Renderer* renderer, const Vec2& pos, const Vec2& v)
+	 :Object(renderer, pos, v, 100, 35.7)
+ {
+
 	 sRect.x = 0;
 	 sRect.y = 0;
 	 sRect.w = 57;
 	 sRect.h = 43;
 
-	 this->pos = pos;
-	 this->v = v;
-	 this->radius = 35.7;
-
 	 dRect.x = this->pos.GetX() - this->radius;
 	 dRect.y = this->pos.GetY() - this->radius;
 	 dRect.w = 57;
 	 dRect.h = 43;
-
-
-	 this->renderer = renderer;
 
 	 SDL_Surface* surface = IMG_Load("ship.png");
 	 ship = SDL_CreateTextureFromSurface(this->renderer, surface);
@@ -86,7 +83,7 @@ void Ship::Update() {
 
 	dRect.w = 57 * fScal;
 	dRect.h = 43 * fScal;
-
+	
 }
 
 void Ship::Render() {
@@ -95,22 +92,27 @@ void Ship::Render() {
 
 void Ship::Accelerate() {
 	this->v += this->acc;
+	this->slave->SetVel(this->v);
 }
 
 void Ship::Accelerate(const Vec2& acc) {
 	this->v += acc;
+	this->slave->SetVel(this->v);
 }
 
 void Ship::Accelerate(const double acc) {
 	this->v += Vec2(acc,this->orientation,true);
+	this->slave->SetVel(this->v);
 }
 
 void Ship::RollRight() {
 	this->omega += 0.01;
+	this->slave->SetOmega(this->omega);
 }
 
 void Ship::RollLeft() {
 	this->omega -= 0.01;
+	this->slave->SetOmega(this->omega);
 }
 
 void Ship::Reset() {
@@ -123,6 +125,9 @@ void Ship::PostProcessing() {
 
 void Ship::Translate(const Vec2& dLoc) {
 	this->fTrans += dLoc;
+	if (this->slave) {
+		this->slave->Translate(dLoc);
+	}
 }
 
 void Ship::Scal(double s, const Vec2& center) {
@@ -134,4 +139,15 @@ void Ship::Rotate(double t, const Vec2& pivot) {
 
 void Ship::Interact(const Object& obj) {
 	Object::Interact(obj);
+}
+
+void Ship::SetRenderer(SDL_Renderer* renderer) {
+	this->renderer = renderer;
+	SDL_Surface* surface = IMG_Load("ship.png");
+	ship = SDL_CreateTextureFromSurface(this->renderer, surface);
+	SDL_FreeSurface(surface);
+
+	if (this->slave) {
+		this->slave->SetRenderer(renderer);
+	}
 }

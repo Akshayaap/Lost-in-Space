@@ -1,60 +1,74 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Game" Collapsed="true">
-    <Position X="1.75" Y="1" Width="1.5" />
+  <Class Name="Game">
+    <Position X="0.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAYAAAAAAAAABABAAAAQQAAAMAiAAAAMgBACAAAAwSA=</HashCode>
+      <HashCode>AAYAAAAAAAAABABBAAAQQAAAMAiAAAAMgBACABAA4SA=</HashCode>
       <FileName>src\game\Game.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Maze" Collapsed="true">
-    <Position X="4" Y="1" Width="1.5" />
+  <Class Name="Maze">
+    <Position X="4.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgAAAAAAAAAAAAAAAAAAAABAAAAAAAAIABEAAAYAgAQ=</HashCode>
       <FileName>src\sim\Maze.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Object" Collapsed="true">
-    <Position X="8.75" Y="0.75" Width="1.5" />
+  <Class Name="Object">
+    <Position X="7" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AI0BRAAACYASRAggAAAQAIkgMAAYACEEABAEAAiAgAI=</HashCode>
+      <HashCode>AI0BRAAACYASVAggAAAQAIkgMAAYACEEABAEABiAgAI=</HashCode>
       <FileName>src\sim\Object.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Planet" Collapsed="true">
-    <Position X="5.25" Y="2.25" Width="1.5" />
+  <Class Name="Planet">
+    <Position X="8.75" Y="6.25" Width="1.5" />
     <InheritanceLine Type="Object" ManuallyRouted="true">
       <Path>
-        <Point X="8.75" Y="1.179" />
-        <Point X="7.25" Y="1.179" />
-        <Point X="7.25" Y="2.659" />
-        <Point X="6.75" Y="2.659" />
+        <Point X="7" Y="7.828" />
+        <Point X="7.25" Y="7.828" />
+        <Point X="7.25" Y="7.93" />
+        <Point X="10.25" Y="7.93" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAICAAAAAAABIGAAAAAQA=</HashCode>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAICAAAgAAABIGAAAAAAA=</HashCode>
       <FileName>src\sim\Planet.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Ship" Collapsed="true">
-    <Position X="8.75" Y="3" Width="1.5" />
+  <Class Name="Ship">
+    <Position X="9.75" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAUAAAAAAAAQBAAAAAAQAAACOQCAAAAAiBAGAAAAgAA=</HashCode>
       <FileName>src\sim\Ship.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="State" Collapsed="true">
-    <Position X="6.25" Y="0.5" Width="1.5" />
+  <Class Name="State">
+    <Position X="2.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAigAACAQCAECAAAAAAoQAAAAAFAAAAAgFACgQAA=</HashCode>
       <FileName>src\dsa\State.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Vec2" Collapsed="true">
-    <Position X="12" Y="1" Width="2.25" />
+  <Class Name="Vec2">
+    <Position X="13.25" Y="1" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAADAUZQCAAAAUAQCAAAACBAYAThgQAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAADAUZQCAAAAUAQGAAAACBAYAThgQABAAA=</HashCode>
       <FileName>src\math\Vec2.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObjInterface">
+    <Position X="4.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAACAAAEABAAAAAAQAAAAIAAAAAAAABAwAABAAAA=</HashCode>
+      <FileName>src\sim\ObjInterface.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Queue&lt;_Ty, SIZE&gt;">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BABAAAAAADAAAAAAAAAACAAAQAGAAAAAAAAAAABACAA=</HashCode>
+      <FileName>Queue.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

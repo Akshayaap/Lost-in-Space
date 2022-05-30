@@ -2,7 +2,7 @@
 #include <SDL.h>
 #include "..\math\Vec2.h"
 
-class Vec2;
+class ObjInterface;
 class Object
 {
 public:
@@ -12,7 +12,7 @@ public:
 	Object(SDL_Renderer* renderer, const Vec2& pos);
 	Object(SDL_Renderer* renderer, const Vec2& pos, const Vec2& v);
 	Object(SDL_Renderer* renderer, const Vec2& pos, const Vec2& v, double mass);
-	Object(SDL_Renderer* renderer, const Vec2& pos, const Vec2& v, double mass,double radius);
+	Object(SDL_Renderer* renderer, const Vec2& pos, const Vec2& v, double mass, double radius);
 	~Object();
 	virtual void Update();
 	virtual void Render();
@@ -38,10 +38,12 @@ public:
 	inline void SetRadius(double radius) {
 		this->radius = radius;
 	}
-	inline void SetRenderer(SDL_Renderer* renderer) {
-		this->renderer = renderer;
+	virtual void SetRenderer(SDL_Renderer* renderer);
+
+	inline void SetOmega(double omega) {
+		this->omega = omega;
 	}
-	
+
 	inline Vec2 GetPos()const {
 		return this->pos;
 	}
@@ -54,19 +56,37 @@ public:
 	inline double GetOrientation()const {
 		return this->orientation;
 	}
-	inline double GetMass() {
+	inline double GetMass() const{
 		return this->mass;
 	}
-	inline double GetRadius() {
+	inline double GetOmega() {
+		return this->omega;
+	}
+	inline double GetRadius() const{
 		return this->radius;
 	}
-	inline SDL_Renderer* GetRenderer() {
+	inline SDL_Renderer* GetRenderer()const {
 		return this->renderer;
 	}
+	inline ObjInterface* GetSlave()const {
+		return this->slave;
+	}
+	inline Vec2 GetForce()const {
+		return this->force;
+	}
+	inline double GetFScal() const {
+		return this->fScal;
+	}
+	inline Vec2 GetFTran() const {
+		return this->fTrans;
+	}
+	inline Vec2 GetFScalCenter()const {
+		return this->fScalCenter;
+	}
 
-	virtual void Rotate(double t,const Vec2& pivot);
+	virtual void Rotate(double t, const Vec2& pivot);
 	virtual void Translate(const Vec2& dLoc);
-	virtual void Scal(double s,const Vec2& center);
+	virtual void Scal(double s, const Vec2& center);
 protected:
 	Vec2 pos;
 	double orientation;
@@ -84,4 +104,5 @@ protected:
 
 protected:
 	SDL_Renderer* renderer;
+	ObjInterface* slave = nullptr;
 };

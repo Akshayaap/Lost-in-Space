@@ -14,6 +14,7 @@ public:
 	virtual void Render()override;
 	virtual void PostProcessing()override;
 	virtual void Reset()override;
+	void SetRenderer(SDL_Renderer* renderer);
 	void Accelerate();
 	void Accelerate(const Vec2 &acc);
 	void Accelerate(const double acc);
@@ -29,8 +30,8 @@ public:
 	}
 
 private:
-	SDL_Texture* ship;
-    SDL_Renderer*renderer;
+	SDL_Texture* ship = nullptr;
+	SDL_Renderer* renderer = nullptr;
 	SDL_Rect sRect;
 	SDL_Rect dRect;
 };

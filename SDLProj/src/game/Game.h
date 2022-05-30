@@ -1,11 +1,13 @@
 #pragma once
-#include <unordered_map>
+#include <queue>
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include "..\sim\Ship.h"
 #include "..\sim\Maze.h"
 #include "..\dsa\State.h"
 #include "..\sim\Planet.h"
+
+#define PATH_LENGTH 200
 
 #ifndef NDEBUG
 #include <iostream>
@@ -29,7 +31,8 @@ private:
 private:
 	Ship ship;
 	Planet earth;
-	std::unordered_map<Object,Object> map;
+	Planet moon;
+	std::vector<ObjInterface*> slaves;
 
 public:
 	Game(const char* title, int top, int left, int width, int height);
@@ -38,6 +41,7 @@ public:
 	void Init(const char* title,int top,int left, int width,int height);
 	void Update();
 	void Interact();
+	void InitPath();
 	void Render();
 	void Clean();
 	void HandleEvents();
