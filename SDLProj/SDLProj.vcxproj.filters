@@ -48,7 +48,7 @@
     <ClCompile Include="src\sim\ObjInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Queue.cpp">
+    <ClCompile Include="src\dsa\Queue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,7 +83,7 @@
     <ClInclude Include="src\sim\ObjInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Queue.h">
+    <ClInclude Include="src\dsa\Queue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

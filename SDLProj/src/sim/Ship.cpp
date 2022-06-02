@@ -103,10 +103,10 @@ void Ship::Update() {
 	scaled += (this->fScalCenter);
 
 	scaled += this->fTrans;
-	scaled -= Vec2(this->radius * this->fScal, this->radius * this->fScal);
+	//scaled -= Vec2(this->radius * this->fScal, this->radius * this->fScal);
 
-	this->dRect.x = scaled.GetX();
-	this->dRect.y = scaled.GetY();
+	this->dRect.x = scaled.GetX() - this->radius * fScal;
+	this->dRect.y = scaled.GetY() - this->radius * fScal;
 
 	this->dRect.w = 57 * fScal;
 	this->dRect.h = 43 * fScal;

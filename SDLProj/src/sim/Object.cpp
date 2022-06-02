@@ -3,6 +3,13 @@
 #include "..\math\util.h"
 
 
+#ifndef NDEBUG
+#include <iostream>
+#define LOG(msg) std::cout<<__FILE__<<":"<<__LINE__<<"::"<<msg<<std::endl
+#else
+#define LOG(msg)
+#endif // !NDEBUG
+
 Object::Object(SDL_Renderer*renderer,const Vec2& pos)
 	:
 	pos(pos), v(0, 0) ,acc(0, 0) ,omega(0) ,mass(100), radius(10),orientation(0),force(0,0)
@@ -118,11 +125,12 @@ void Object::Reset() {
 void Object::Interact(const Object& obj) {
 	double sDist = (this->pos.GetX() - obj.pos.GetX()) * (this->pos.GetX() - obj.pos.GetX()) + (this->pos.GetY() - obj.pos.GetY()) * (this->pos.GetY() - obj.pos.GetY());
 
-	if ((this->radius + obj.radius) * (this->radius + obj.radius) <= sDist) {
-		//Collision Handling code
+	if ((this->radius + obj.radius) * (this->radius + obj.radius) >= sDist) {
+		//this->v = -this->v;
+		return;
 	}
-
-	double force = 0.1 * this->mass * obj.mass / sDist;
+	//double dist = sqrt(sDist);
+	double force = .1 * this->mass * obj.mass / sDist;
 	Vec2 dir = (  this->pos - obj.pos).Norm();
 	dir *= force;
 	this->force -= dir;

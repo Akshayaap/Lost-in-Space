@@ -162,7 +162,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Queue.cpp" />
+    <ClCompile Include="src\dsa\Queue.cpp" />
     <ClCompile Include="src\sim\ObjInterface.cpp" />
     <ClCompile Include="src\gfx\SDL_Extension.cpp" />
     <ClCompile Include="src\sim\Planet.cpp" />
@@ -176,7 +176,7 @@
     <ClCompile Include="src\dsa\State.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Queue.h" />
+    <ClInclude Include="src\dsa\Queue.h" />
     <ClInclude Include="src\sim\ObjInterface.h" />
     <ClInclude Include="src\gfx\SDL_Extension.h" />
     <ClInclude Include="src\sim\Planet.h" />

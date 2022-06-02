@@ -244,6 +244,23 @@ void Game::HandleEvents() {
 				this->ship.RollRight();
 				break;
 
+			case SDLK_8:
+				this->ship.Accelerate(1);
+				break;
+
+			case SDLK_4:
+				break;
+
+			case SDLK_6:
+				break;
+
+			case SDLK_2:
+				this->ship.Accelerate(-1);
+				break;
+
+			case SDLK_5:
+				break;
+
 			default:
 				break;
 			}
