@@ -131,7 +131,7 @@ void Ship::Update() {
 void Ship::Render() {
 	SDL_RenderCopyEx(this->renderer, this->ship, nullptr, &dRect,  this->orientation * 180 / PI, nullptr, SDL_FLIP_NONE);
 	if (true) {
-		SDL_RenderCopyEx(this->renderer, this->fire, nullptr, &fRect, this->orientation * 180 / PI, nullptr, SDL_FLIP_NONE);
+		//SDL_RenderCopyEx(this->renderer, this->fire, nullptr, &fRect, this->orientation * 180 / PI, nullptr, SDL_FLIP_NONE);
 	}
 }
 

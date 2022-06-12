@@ -125,10 +125,10 @@ void Object::Reset() {
 void Object::Interact(const Object& obj) {
 	double sDist = (this->pos.GetX() - obj.pos.GetX()) * (this->pos.GetX() - obj.pos.GetX()) + (this->pos.GetY() - obj.pos.GetY()) * (this->pos.GetY() - obj.pos.GetY());
 
-	if ((this->radius + obj.radius) * (this->radius + obj.radius) >= sDist) {
+	//if ((this->radius + obj.radius) * (this->radius + obj.radius) >= sDist) {
 		//this->v = -this->v;
-		return;
-	}
+		//return;
+	//}
 	//double dist = sqrt(sDist);
 	double force = .1 * this->mass * obj.mass / sDist;
 	Vec2 dir = (  this->pos - obj.pos).Norm();

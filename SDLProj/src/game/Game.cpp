@@ -5,7 +5,7 @@
 
 Game::Game(const char* title, int top, int left, int width, int height) 
 	:ship(this->renderer, Vec2(200, 200), Vec2(2, 1)),
-	earth(this->renderer, Vec2(500, 500), 20000, 200)
+	earth(this->renderer, Vec2(500, 500), 20000, 20)
 {
 	Init(title, left, top, width, height);
 	font = TTF_OpenFont("OpenSans-Regular.ttf", 50);
